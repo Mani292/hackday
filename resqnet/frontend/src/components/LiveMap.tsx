@@ -1,6 +1,6 @@
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
+import * as L from 'leaflet';
 import { MapContainer, TileLayer, Marker, Popup, Polyline, useMap } from 'react-leaflet';
-import L from 'leaflet';
 import type { Incident, Resource, Hospital } from '../types';
 
 // Fix Leaflet default icon paths

@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route, Link, useLocation, useNavigate } from 're
 import { useState, useEffect } from 'react';
 import {
   Shield, LayoutDashboard, AlertTriangle, Truck, BarChart3,
-  Menu, X, Zap, Activity, Wifi, WifiOff
+  X, Zap, Activity, Wifi, WifiOff
 } from 'lucide-react';
 import { api } from './services/api';
 import LandingPage from './pages/LandingPage';
@@ -32,7 +32,6 @@ function NavLink({ to, icon: Icon, label }: { to: string; icon: React.ElementTyp
 }
 
 function Navbar({ onSimulate }: { onSimulate: () => void }) {
-  const [menuOpen, setMenuOpen] = useState(false);
   const [apiOnline, setApiOnline] = useState<boolean | null>(null);
 
   useEffect(() => {
@@ -186,22 +185,18 @@ function SimulateModal({ isOpen, onClose, result }: {
 }
 
 export default function App() {
-  const [simulating, setSimulating] = useState(false);
   const [simResult, setSimResult] = useState<{ incident_id: string } | null>(null);
   const [simOpen, setSimOpen] = useState(false);
 
   const handleSimulate = async () => {
     setSimOpen(true);
     setSimResult(null);
-    setSimulating(true);
     try {
       const res = await api.demo.simulate();
       setSimResult({ incident_id: res.incident_id });
     } catch (err) {
       console.error('Simulate failed:', err);
       setSimOpen(false);
-    } finally {
-      setSimulating(false);
     }
   };
 

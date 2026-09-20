@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
-  ArrowLeft, MapPin, Users, Clock, RefreshCw, ChevronDown,
+  ArrowLeft, MapPin, Users, Clock, RefreshCw,
   AlertTriangle, Ambulance, Hospital, Navigation
 } from 'lucide-react';
 import { api } from '../services/api';
