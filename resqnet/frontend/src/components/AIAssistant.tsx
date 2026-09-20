@@ -15,7 +15,7 @@ export default function AIAssistant() {
   const [messages, setMessages] = useState<AssistantMessage[]>([
     {
       role: 'assistant',
-      content: 'Hello! I\'m the ResQNet Command AI. Ask me about active incidents, available resources, or the current situation.',
+      content: 'Hello! I\'m the ResQNet AI command layer. I can triage incidents, rank resource allocation, compare routes, and explain the current dispatch strategy in real time.',
     },
   ]);
   const [input, setInput] = useState('');
@@ -58,12 +58,12 @@ export default function AIAssistant() {
       <button
         id="ai-assistant-btn"
         onClick={() => setOpen(v => !v)}
-        className="fixed bottom-6 right-6 z-40 w-12 h-12 rounded-full bg-command-600 hover:bg-command-500 
-                   text-white flex items-center justify-center shadow-xl shadow-command-900/50 
-                   transition-all duration-200 hover:scale-110"
+        className="fixed bottom-6 right-6 z-40 w-14 h-14 rounded-full bg-gradient-to-br from-command-600 to-blue-500 hover:from-command-500 hover:to-blue-400 
+                   text-white flex items-center justify-center shadow-xl shadow-blue-900/40 
+                   transition-all duration-200 hover:scale-110 ring-4 ring-white/20"
         title="AI Command Assistant"
       >
-        {open ? <X size={20} /> : <MessageSquare size={20} />}
+        {open ? <X size={22} /> : <MessageSquare size={22} />}
       </button>
 
       {/* Chat panel */}

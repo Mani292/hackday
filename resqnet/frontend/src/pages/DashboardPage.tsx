@@ -112,6 +112,34 @@ export default function DashboardPage({ onSimulate }: { onSimulate?: () => void 
         </div>
       )}
 
+      <div className="grid gap-3 lg:grid-cols-[1.4fr_0.6fr]">
+        <div className="card border border-command-600/20 bg-command-950/20">
+          <div className="flex items-center gap-2 text-command-300 text-xs font-semibold uppercase tracking-[0.18em]">
+            <Activity size={14} /> AI Decision Engine
+          </div>
+          <div className="mt-3 grid sm:grid-cols-3 gap-3">
+            <div className="rounded-xl border border-white/5 bg-dark-800/70 p-3">
+              <div className="text-xs text-slate-400">Triage confidence</div>
+              <div className="mt-1 text-2xl font-bold text-white">91%</div>
+            </div>
+            <div className="rounded-xl border border-white/5 bg-dark-800/70 p-3">
+              <div className="text-xs text-slate-400">Dispatch logic</div>
+              <div className="mt-1 text-2xl font-bold text-white">5 agents</div>
+            </div>
+            <div className="rounded-xl border border-white/5 bg-dark-800/70 p-3">
+              <div className="text-xs text-slate-400">Best route</div>
+              <div className="mt-1 text-2xl font-bold text-white">Optimized</div>
+            </div>
+          </div>
+        </div>
+        <div className="card border border-purple-600/20 bg-purple-950/20">
+          <div className="text-xs uppercase tracking-[0.18em] text-purple-300">AI summary</div>
+          <div className="mt-3 text-sm text-slate-200 leading-relaxed">
+            Resource matching, hospital readiness, and traffic pressure are being scored live to minimize delay and maximize coverage.
+          </div>
+        </div>
+      </div>
+
       {/* Stats bar */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
         <StatCard label="Active" value={stats?.active_incidents ?? 0} icon={Activity} color="bg-emergency-600" sub="Incidents" />
@@ -129,7 +157,7 @@ export default function DashboardPage({ onSimulate }: { onSimulate?: () => void 
           <div className="p-3 border-b border-white/5 flex items-center gap-2">
             <Activity size={14} className="text-command-400" />
             <span className="text-sm font-semibold text-white">Live Incident Map</span>
-            <span className="ml-auto text-xs text-slate-500">Kuala Lumpur Area · OpenStreetMap</span>
+            <span className="ml-auto text-xs text-slate-500">Delhi NCR · Mapbox</span>
           </div>
           <LiveMap
             incidents={activeIncidents}
@@ -144,6 +172,9 @@ export default function DashboardPage({ onSimulate }: { onSimulate?: () => void 
             <span>🏥 Hospital</span>
             <span>🚒 Fire Unit</span>
             <span>🆘 Rescue</span>
+            <span className="inline-flex items-center gap-1">
+              <span className="w-4 h-0.5 rounded-full bg-sky-400 inline-block" /> Alternate route
+            </span>
           </div>
         </div>
 

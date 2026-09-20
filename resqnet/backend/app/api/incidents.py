@@ -254,10 +254,10 @@ def get_routes(incident_id: str, db: Session = Depends(get_db)):
         hosp = db.query(Hospital).filter(Hospital.id == inc.assigned_hospital_id).first()
 
     if not amb or not hosp:
-        # Default: route from city centre to nearest hospital
+        # Default: keep the demo in Delhi/NCR even when a resource or hospital is missing.
         return routing_agent.calculate_routes(
-            origin_lat=3.1478, origin_lon=101.6953,
-            dest_lat=3.1466, dest_lon=101.6956,
+            origin_lat=28.6139, origin_lon=77.2090,
+            dest_lat=28.5668, dest_lon=77.2068,
             incident_lat=inc.latitude,
             incident_lon=inc.longitude,
         )

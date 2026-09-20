@@ -12,16 +12,16 @@ const INCIDENT_TYPES: { value: IncidentType; label: string; emoji: string }[] = 
   { value: 'other', label: 'Other Emergency', emoji: '⚠️' },
 ];
 
-// KL landmarks for location picker
-const KL_LOCATIONS = [
-  { label: 'KLCC / Petronas Towers', lat: 3.1578, lng: 101.7116 },
-  { label: 'Central Junction, Jalan Ampang', lat: 3.1570, lng: 101.7120 },
-  { label: 'Mid Valley Megamall', lat: 3.1173, lng: 101.6773 },
-  { label: 'Bukit Bintang', lat: 3.1462, lng: 101.7100 },
-  { label: 'Chow Kit Market', lat: 3.1640, lng: 101.6980 },
-  { label: 'KL Sentral', lat: 3.1339, lng: 101.6866 },
-  { label: 'Masjid India', lat: 3.1520, lng: 101.7010 },
-  { label: 'Bangsar', lat: 3.1218, lng: 101.6733 },
+// Delhi landmarks for location picker
+const INDIA_LOCATIONS = [
+  { label: 'Connaught Place', lat: 28.6315, lng: 77.2167 },
+  { label: 'Rajiv Chowk', lat: 28.6328, lng: 77.2197 },
+  { label: 'Saket', lat: 28.5200, lng: 77.2060 },
+  { label: 'Karol Bagh', lat: 28.6530, lng: 77.2020 },
+  { label: 'South Extension', lat: 28.5670, lng: 77.2160 },
+  { label: 'New Delhi Railway Station', lat: 28.6437, lng: 77.2213 },
+  { label: 'India Gate', lat: 28.6129, lng: 77.2295 },
+  { label: 'Rohini', lat: 28.7380, lng: 77.0754 },
 ];
 
 export default function ReportPage() {
@@ -34,8 +34,8 @@ export default function ReportPage() {
     incident_type: '' as IncidentType | '',
     description: '',
     location: '',
-    latitude: 3.1570,
-    longitude: 101.7120,
+    latitude: 28.6315,
+    longitude: 77.2167,
     affected_people: 1,
     reporter_name: '',
     reporter_phone: '',
@@ -44,7 +44,7 @@ export default function ReportPage() {
   const setField = (field: string, value: unknown) =>
     setForm(prev => ({ ...prev, [field]: value }));
 
-  const handleLocationPick = (loc: typeof KL_LOCATIONS[0]) => {
+  const handleLocationPick = (loc: typeof INDIA_LOCATIONS[0]) => {
     setField('location', loc.label);
     setField('latitude', loc.lat);
     setField('longitude', loc.lng);
@@ -94,17 +94,17 @@ export default function ReportPage() {
         <div className="font-mono text-lg text-emergency-300 font-bold bg-emergency-950/50 border border-emergency-700/30 rounded-lg px-6 py-3 mb-6">
           {success}
         </div>
-        <div className="flex gap-3 justify-center">
+        <div className="flex gap-3 justify-center flex-wrap">
           <button
             onClick={() => navigate(`/incidents/${success}`)}
-            className="btn-emergency"
+            className="btn-emergency shadow-lg shadow-red-200"
             id="view-new-incident-btn"
           >
             Track Incident
           </button>
           <button
             onClick={() => navigate('/dashboard')}
-            className="btn-outline"
+            className="btn-outline shadow-sm"
           >
             Command Center
           </button>
@@ -174,7 +174,7 @@ export default function ReportPage() {
         <div className="card">
           <label className="label">Location *</label>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 mb-3">
-            {KL_LOCATIONS.map(loc => (
+            {INDIA_LOCATIONS.map(loc => (
               <button
                 key={loc.label}
                 type="button"

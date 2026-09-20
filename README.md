@@ -1,122 +1,113 @@
 # AegisFlow
 
-AegisFlow is an AI-powered emergency coordination and resource intelligence platform designed for command centers managing multiple simultaneous incidents under constrained resources. It analyzes incidents, identifies conflicts, evaluates hospital and route pressure, and simulates coordinated response plans with human approval.
+AegisFlow is an AI-powered emergency response coordination platform built for live incident command and dispatch planning. It combines a FastAPI backend, React front end, and multi-agent routing logic to simulate real-world emergency coordination across incidents, hospitals, and field resources.
 
-## Problem
+## Overview
 
-Emergency response systems often operate in separate silos. A road accident, building fire, or cardiac emergency can overwhelm local responders, hospital capacity, and route planning when several incidents happen at once. Traditional nearest-resource logic cannot capture network-wide tradeoffs.
+The system helps a command center answer questions such as:
 
-## Solution
+- Which incidents are most critical right now?
+- Which ambulances or resources are available?
+- Which hospital has the best capacity and trauma readiness?
+- What is the fastest realistic response route?
+- Where are the biggest dispatch conflicts or bottlenecks?
 
-AegisFlow brings together an incident intelligence agent, resource matcher, hospital evaluator, routing model, network optimizer, and risk analysis. The platform recommends a coordinated plan, highlights conflicts, and supports operator approval before dispatch.
-
-## Why existing systems are fragmented
-
-Most tools optimize a single emergency in isolation. They often fail to account for:
-
-- simultaneous incidents competing for the same teams and ambulances
-- hospital saturation and trauma-capable capacity constraints
-- rising traffic congestion and route degradation
-- cascading effects across the network
-- the need for reserve capacity and human review
-
-## Core innovation
-
-The platform evaluates the full emergency network. Instead of asking, “Who is closest?”, it asks: “If I assign this resource here, what happens to the rest of the system?”
+AegisFlow is optimized for hackathon demos and operational concept validation, with a strong emphasis on a polished user experience and fast end-to-end workflow.
 
 ## Features
 
-- Incident creation and AI classification
-- Resource matching and prioritization
-- Hospital capacity recommendation
-- Route and ETA simulation
-- Network optimization and conflict detection
-- Cascading risk analysis
-- Human approval workflow
-- Demo emergency escalation simulation
-- Live dashboard and analytics
-
-## Multi-agent architecture
-
-- Incident Agent
-- Resource Agent
-- Hospital Agent
-- Routing Agent
-- Optimization Agent
-- Risk Agent
-- Coordination Agent
-- Orchestrator
-
-## Network optimization
-
-The optimizer checks all active incidents together to account for resource shortages, hospital pressure, and route conflicts. It creates a coordinated plan that preserves emergency reserve capacity when needed.
-
-## Cascading risk analysis
-
-The system models how a single event—such as a blocked route or overloaded hospital—affects multiple incidents, increasing delay and reducing available options across the network.
-
-## What-if simulation
-
-A built-in escalation simulator creates realistic high-impact scenarios such as building collapse or mass casualty events and measures the resulting resource, route, hospital, and conflict impact.
-
-## Human-in-the-loop
-
-Every major recommendation is presented as AI-generated guidance requiring operator approval. The command center remains responsible for final decisions.
+- AI incident analysis and severity classification
+- Multi-agent emergency coordination workflow
+- Resource matching and dispatch recommendations
+- Hospital capacity and emergency readiness scoring
+- Shortest-fastest route simulation with realistic road-like pathing
+- Live dashboard and analytics views
+- Incident timeline and status updates
+- Emergency reporting flow
+- Command AI chat assistant for response queries
+- Demo emergency simulation workflow
 
 ## Tech stack
 
-- Frontend: React + Vite + TypeScript + Tailwind CSS + Leaflet + Recharts
-- Backend: FastAPI + SQLAlchemy + Pydantic
+- Frontend: React, Vite, TypeScript, Tailwind CSS, Leaflet, Recharts
+- Backend: FastAPI, SQLAlchemy, Pydantic
 - Database: SQLite
-- AI: configurable LLM provider with deterministic fallback
-- Maps: OpenStreetMap + Leaflet
+- AI layer: configurable Gemini / OpenAI-compatible provider flow
+- Mapping: Mapbox + Leaflet base tiles
 
-## Architecture diagram
+## Project structure
 
 ```text
-Client UI -> FastAPI API -> Orchestrator -> Incident / Resource / Hospital / Routing / Optimization / Risk Agents -> SQLite
+resqnet/
+├── backend/
+│   ├── app/
+│   ├── requirements.txt
+│   ├── .env.example
+│   └── ...
+├── frontend/
+│   ├── src/
+│   ├── package.json
+│   ├── vite.config.ts
+│   └── ...
+├── README.md
+├── start_aegisflow.ps1
+└── docker-compose.yml
 ```
 
-## Database schema
+## Local development setup
 
-Core tables include incidents, resources, hospitals, assignments, response_events, response_plans, and conflicts.
-
-## Installation
+### 1) Backend
 
 ```bash
 cd resqnet/backend
 python -m venv .venv
-source .venv/bin/activate  # Windows: .venv\Scripts\activate
+# Windows
+.venv\Scripts\activate
+# macOS/Linux
+source .venv/bin/activate
 pip install -r requirements.txt
 ```
+
+### 2) Frontend
 
 ```bash
 cd ../frontend
 npm install
 ```
 
-## Environment variables
+### 3) Environment variables
 
-Copy the backend example file and adjust it if needed:
+Create a backend env file if needed:
 
 ```bash
-cp backend/.env.example backend/.env
+cp .env.example .env
 ```
 
-Available settings:
+Example values:
 
-- AI_PROVIDER=google
-- AI_API_KEY=
-- AI_MODEL=gemini-1.5-flash
-- SEED_DB=true
+```env
+AI_PROVIDER=google
+AI_API_KEY=your_gemini_api_key_here
+AI_MODEL=gemini-1.5-flash
+APP_ENV=development
+DEBUG=true
+SEED_DB=true
+CORS_ORIGINS=http://localhost:5173,http://localhost:3000
+```
 
-## Running locally
+For the frontend, set the API base if needed:
+
+```env
+VITE_API_BASE_URL=http://localhost:8000
+```
+
+## Run locally
 
 Backend:
 
 ```bash
 cd resqnet/backend
-uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+.venv\Scripts\python.exe -m uvicorn app.main:app --host 0.0.0.0 --port 8000
 ```
 
 Frontend:
@@ -126,34 +117,55 @@ cd resqnet/frontend
 npm run dev -- --host 0.0.0.0 --port 5173
 ```
 
-## Demo instructions
+Then open:
+
+- http://localhost:5173
+- API docs: http://localhost:8000/docs
+
+## Demo flow
 
 1. Open the dashboard.
-2. Review active incidents and live resource status.
-3. Click Simulate Emergency.
-4. Watch the AI pipeline analyze the new incident.
-5. Review resource conflict and hospital warnings.
-6. Approve the recommended response plan.
-7. Refresh the command center to see the updated state.
+2. Review active incidents and resource availability.
+3. Click the emergency simulation button.
+4. Watch the AI pipeline analyze the scenario.
+5. Review route, resource, and hospital recommendations.
+6. Update incident status and inspect the timeline.
+7. Use the AI assistant to ask operational questions.
 
-## Screenshots
+## Deployment
 
-Add screenshots to the project as needed for demo use.
+This project is prepared for a simple containerized deployment workflow.
 
-## Future scalability
+### Docker Compose
 
-These are future integrations, not existing ones:
+From the project root:
 
-- government emergency systems
-- ambulance GPS feeds
-- hospital management systems
-- traffic APIs
-- IoT sensors
-- emergency call center integrations
-- GIS infrastructure
-- SMS/WhatsApp notifications
-- drone and satellite feeds
+```bash
+docker compose up --build
+```
+
+This starts:
+
+- backend on port 8000
+- frontend on port 5173
+
+### Production frontend build
+
+```bash
+cd resqnet/frontend
+npm run build
+```
+
+The output goes to the `dist` folder and can be served by a static host or reverse proxy.
+
+### Production backend notes
+
+The FastAPI API is designed to run behind a proxy or platform service and uses `CORS_ORIGINS` for deployment host configuration.
 
 ## Notes
 
-This is a demo-grade, synthetic emergency coordination platform for hackathon evaluation and operator training. It is not a real-world emergency dispatch system and should not be relied on for live emergency decisions without human oversight.
+This is a demo-grade emergency coordination platform created for showcase and concept validation. It is not a production-grade emergency dispatch system for live 911 or field-critical operations without additional safety controls, data validation, and production network integration.
+
+## License
+
+This project is intended for hackathon/demo use and is distributed as a local prototype unless the repository owner specifies another license.

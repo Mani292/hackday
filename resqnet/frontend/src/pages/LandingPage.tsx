@@ -11,35 +11,36 @@ export default function LandingPage({ onSimulate }: LandingPageProps) {
       <div className="grid lg:grid-cols-[1.2fr_0.8fr] gap-6 items-start">
         <section className="card p-6 sm:p-8">
           <div className="inline-flex items-center gap-2 rounded-full border border-command-600/30 bg-command-950/40 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-command-300">
-            <Shield size={14} /> AegisFlow Command Center
+            <Shield size={14} /> AI Emergency Coordination Engine
           </div>
 
           <h1 className="mt-5 text-3xl sm:text-5xl font-bold tracking-tight text-white leading-tight">
-            Coordinate the entire emergency network, not just the nearest responder.
+            Coordinate the entire emergency network with live AI decision support.
           </h1>
 
           <p className="mt-4 max-w-xl text-sm sm:text-base text-slate-300">
-            AI-powered emergency coordination for simultaneous incidents, hospital capacity, traffic constraints,
-            and cascading risk across the whole response system.
+            Our AI continuously ranks incidents, predicts routing pressure, matches resources, and recommends the fastest
+            hospital and dispatch plan across the whole response system.
           </p>
 
           <div className="mt-6 flex flex-wrap gap-3">
             <Link to="/dashboard" className="btn-primary">
-              <Activity size={16} /> Open Command Center
+              <Activity size={16} /> Open AI Command Center
             </Link>
             <button onClick={onSimulate} className="btn-emergency">
-              <Zap size={16} /> Simulate Escalation
+              <Zap size={16} /> Run AI Simulation
             </button>
             <Link to="/report" className="btn-outline">
               <AlertTriangle size={16} /> Report Emergency
             </Link>
           </div>
 
-          <div className="mt-8 grid sm:grid-cols-3 gap-3">
+          <div className="mt-8 grid sm:grid-cols-4 gap-3">
             {[
               ['12', 'Active incidents'],
               ['4', 'Critical alerts'],
               ['91%', 'AI confidence'],
+              ['5', 'Agents active'],
             ].map(([value, label]) => (
               <div key={label} className="bg-dark-800/80 border border-white/5 rounded-xl p-4">
                 <div className="text-2xl font-bold text-white">{value}</div>

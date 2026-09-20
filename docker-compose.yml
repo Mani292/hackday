@@ -1,0 +1,25 @@
+services:
+  backend:
+    build:
+      context: ./resqnet/backend
+    container_name: aegisflow-backend
+    ports:
+      - "8000:8000"
+    environment:
+      APP_ENV: development
+      DEBUG: "true"
+      SEED_DB: "true"
+      CORS_ORIGINS: "http://localhost:5173,http://localhost:80,http://frontend"
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./resqnet/frontend
+      args:
+        VITE_API_BASE_URL: http://localhost:8000
+    container_name: aegisflow-frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+    restart: unless-stopped

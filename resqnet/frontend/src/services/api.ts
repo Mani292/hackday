@@ -10,7 +10,7 @@ import type {
   CoordinationPlan,
 } from '../types';
 
-const BASE_URL = '/api';
+const BASE_URL = (import.meta.env.VITE_API_BASE_URL || '/api').replace(/\/$/, '');
 
 async function request<T>(
   path: string,

@@ -21,8 +21,8 @@ function NavLink({ to, icon: Icon, label }: { to: string; icon: React.ElementTyp
       to={to}
       className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-150 ${
         active
-          ? 'bg-command-600/20 text-command-400 border border-command-600/30'
-          : 'text-slate-400 hover:text-white hover:bg-white/5'
+          ? 'bg-blue-50 text-blue-700 border border-blue-200 shadow-sm'
+          : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
       }`}
     >
       <Icon size={16} />
@@ -41,15 +41,15 @@ function Navbar({ onSimulate }: { onSimulate: () => void }) {
   }, []);
 
   return (
-    <nav className="sticky top-0 z-50 bg-dark-950/90 backdrop-blur-sm border-b border-white/5">
+    <nav className="sticky top-0 z-50 bg-white/90 backdrop-blur-sm border-b border-slate-200 shadow-sm">
       <div className="max-w-screen-2xl mx-auto px-4 h-14 flex items-center justify-between gap-4">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2.5 shrink-0">
-          <div className="w-8 h-8 rounded-lg bg-emergency-600 flex items-center justify-center shadow-lg shadow-emergency-900/50">
+          <div className="w-8 h-8 rounded-lg bg-emergency-600 flex items-center justify-center shadow-lg shadow-emergency-900/20">
             <Shield size={16} className="text-white" />
           </div>
           <div className="flex flex-col leading-none">
-            <span className="font-bold text-white text-base tracking-tight">ResQNet</span>
+            <span className="font-bold text-slate-900 text-base tracking-tight">ResQNet</span>
             <span className="text-slate-500 text-[10px] hidden sm:block">Emergency Response AI</span>
           </div>
         </Link>
@@ -85,21 +85,12 @@ function Navbar({ onSimulate }: { onSimulate: () => void }) {
           <button
             id="simulate-emergency-btn"
             onClick={onSimulate}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emergency-600 hover:bg-emergency-500 text-white text-sm font-semibold transition-all duration-150 shadow-lg shadow-emergency-900/30"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-red-600 hover:bg-red-500 text-white text-sm font-semibold transition-all duration-150 shadow-lg shadow-red-200"
           >
             <Zap size={14} />
             <span className="hidden sm:inline">Simulate</span>
           </button>
 
-          <Link
-            to="/report"
-            className="btn-primary text-xs"
-            id="report-emergency-nav-btn"
-          >
-            <AlertTriangle size={14} />
-            <span className="hidden md:inline">Report Emergency</span>
-            <span className="md:hidden">Report</span>
-          </Link>
         </div>
       </div>
     </nav>
@@ -116,8 +107,8 @@ function SimulateModal({ isOpen, onClose, result }: {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-fade-in">
-      <div className="bg-dark-900 border border-white/10 rounded-2xl p-6 max-w-md w-full shadow-2xl animate-slide-up">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/30 backdrop-blur-sm animate-fade-in">
+      <div className="bg-white border border-slate-200 rounded-2xl p-6 max-w-md w-full shadow-2xl animate-slide-up text-slate-900">
         <div className="flex items-start justify-between mb-4">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-full bg-emergency-600/20 flex items-center justify-center">
@@ -139,7 +130,7 @@ function SimulateModal({ isOpen, onClose, result }: {
               <div className="text-xs text-slate-400 mb-1">INCIDENT ID</div>
               <div className="font-mono text-emergency-300 font-bold text-lg">{result.incident_id}</div>
               <div className="text-xs text-slate-400 mt-2">
-                Major road accident near Central Junction, KL. AI analysis complete.
+                Major road accident near Connaught Place, New Delhi. AI analysis complete.
               </div>
             </div>
             <div className="grid grid-cols-3 gap-2 mb-5 text-center text-xs">
@@ -202,7 +193,7 @@ export default function App() {
 
   return (
     <BrowserRouter>
-      <div className="min-h-screen bg-dark-950 text-white">
+      <div className="min-h-screen bg-slate-100 text-slate-900">
         <div className="demo-banner">
           ⚠️ DEMO MODE — All incidents, resources and routes are simulated for demonstration purposes. Not for real emergency use.
         </div>
@@ -218,6 +209,14 @@ export default function App() {
             <Route path="/analytics" element={<AnalyticsPage />} />
           </Routes>
         </main>
+        <Link
+          to="/report"
+          className="fixed bottom-6 left-6 z-40 inline-flex items-center gap-2 rounded-2xl bg-gradient-to-r from-blue-600 to-blue-700 px-5 py-3 text-sm font-semibold text-white shadow-2xl shadow-blue-200 transition-all duration-200 hover:-translate-y-0.5 hover:from-blue-500 hover:to-blue-600"
+          id="report-emergency-floating-btn"
+        >
+          <AlertTriangle size={16} />
+          Report Emergency
+        </Link>
         <AIAssistant />
         <SimulateModal
           isOpen={simOpen}

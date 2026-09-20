@@ -25,10 +25,23 @@ export default function IncidentDetailPage() {
   const [timeline, setTimeline] = useState<ResponseEvent[]>([]);
   const [routes, setRoutes] = useState<RouteResult | null>(null);
   const [loading, setLoading] = useState(true);
+
+  const routePath = routes && routes.primary_route.waypoints.length > 0
+    ? routes.primary_route.waypoints.map(w => [w.lat, w.lng] as [number, number])
+    : undefined;
   const [coordLoading, setCoordLoading] = useState(false);
   const [statusUpdating, setStatusUpdating] = useState(false);
   const [activeTab, setActiveTab] = useState<'analysis' | 'coordination' | 'route' | 'timeline'>('analysis');
   const [error, setError] = useState<string | null>(null);
+
+  const statusButtons = [
+    { value: 'reported', label: 'Reported' },
+    { value: 'analyzing', label: 'Analyzing' },
+    { value: 'resources_matched', label: 'Resources' },
+    { value: 'dispatched', label: 'Dispatched' },
+    { value: 'en_route', label: 'En Route' },
+    { value: 'arrived', label: 'Arrived' },
+  ] as const;
 
   const load = async () => {
     if (!id) return;
@@ -133,18 +146,34 @@ export default function IncidentDetailPage() {
         </div>
 
         {/* Status updater */}
-        <div className="flex items-center gap-2">
-          <select
-            id="status-selector"
-            value={incident.status}
-            onChange={e => handleStatusUpdate(e.target.value)}
-            disabled={statusUpdating}
-            className="input text-sm py-1.5 w-auto pr-8"
+        <div className="flex items-center gap-2 flex-wrap justify-end">
+          {statusButtons.map(s => (
+            <button
+              key={s.value}
+              type="button"
+              onClick={() => handleStatusUpdate(s.value)}
+              disabled={statusUpdating || incident.status === s.value}
+              className={`px-2.5 py-1.5 rounded-lg text-[10px] font-semibold uppercase tracking-wide transition-all ${
+                incident.status === s.value
+                  ? 'bg-command-600 text-white shadow-sm shadow-command-900/40'
+                  : 'bg-dark-800 text-slate-300 border border-white/5 hover:border-command-600/40 hover:text-white'
+              }`}
+            >
+              {s.label}
+            </button>
+          ))}
+          <button
+            type="button"
+            onClick={() => handleStatusUpdate('resolved')}
+            disabled={statusUpdating || incident.status === 'resolved'}
+            className={`px-3 py-1.5 rounded-lg text-[10px] font-semibold uppercase tracking-wide transition-all ${
+              incident.status === 'resolved'
+                ? 'bg-green-600 text-white shadow-sm shadow-green-900/40'
+                : 'bg-green-900/40 text-green-300 border border-green-700/40 hover:bg-green-800/50 hover:text-white'
+            }`}
           >
-            {STATUS_OPTIONS.map(s => (
-              <option key={s} value={s}>{s.replace(/_/g, ' ').toUpperCase()}</option>
-            ))}
-          </select>
+            {incident.status === 'resolved' ? 'Resolved' : 'Mark Resolved'}
+          </button>
           {statusUpdating && <RefreshCw size={14} className="text-slate-400 animate-spin" />}
         </div>
       </div>
@@ -268,6 +297,7 @@ export default function IncidentDetailPage() {
               }] : []}
               height="280px"
               selectedIncident={incident}
+              routePath={routePath}
             />
           </div>
 
