@@ -3,12 +3,11 @@ services:
     name: resqnet-backend
     runtime: python
     plan: free
-    rootDir: resqnet/backend
-    buildCommand: pip install -r requirements.txt
-    startCommand: python -m uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    buildCommand: cd resqnet/backend && pip install -r requirements.txt
+    startCommand: cd resqnet/backend && python -m uvicorn app.main:app --host 0.0.0.0 --port $PORT
     envVars:
       - key: PYTHON_VERSION
-        value: 3.12.3
+        value: 3.12
       - key: APP_ENV
         value: production
       - key: DEBUG
@@ -16,4 +15,4 @@ services:
       - key: SEED_DB
         value: "true"
       - key: CORS_ORIGINS
-        value: "https://your-github-pages-domain.example.com,http://localhost:5173"
+        value: "http://localhost:5173"
