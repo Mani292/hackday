@@ -1,6 +1,6 @@
-# AegisFlow
+# ResQNet Emergency Response AI
 
-AegisFlow is an AI-powered emergency response coordination platform built for live incident command and dispatch planning. It combines a FastAPI backend, React front end, and multi-agent routing logic to simulate real-world emergency coordination across incidents, hospitals, and field resources.
+ResQNet Emergency Response AI is an AI-powered emergency response coordination platform built for live incident command and dispatch planning. It combines a FastAPI backend, React front end, and multi-agent routing logic to simulate real-world emergency coordination across incidents, hospitals, and field resources.
 
 ## Overview
 
@@ -12,7 +12,7 @@ The system helps a command center answer questions such as:
 - What is the fastest realistic response route?
 - Where are the biggest dispatch conflicts or bottlenecks?
 
-AegisFlow is optimized for hackathon demos and operational concept validation, with a strong emphasis on a polished user experience and fast end-to-end workflow.
+ResQNet Emergency Response AI is optimized for hackathon demos and operational concept validation, with a strong emphasis on a polished user experience and fast end-to-end workflow.
 
 ## Features
 
