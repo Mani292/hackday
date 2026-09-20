@@ -134,33 +134,86 @@ Then open:
 
 ## Deployment
 
-This project is prepared for a simple containerized deployment workflow.
+This project is designed for a simple GitHub + Render deployment flow.
+
+### GitHub deployment
+
+1. Create a GitHub repository.
+2. Push the project to GitHub:
+
+```bash
+git init
+git branch -M main
+git remote add origin https://github.com/<your-user>/<your-repo>.git
+git add .
+git commit -m "Initial commit"
+git push -u origin main
+```
+
+### Backend deployment on Render
+
+1. Create a new Web Service in Render.
+2. Connect the GitHub repository.
+3. Set the root directory to:
+
+```text
+resqnet/backend
+```
+
+4. Use the following settings:
+
+- Build command:
+
+```bash
+pip install -r requirements.txt
+```
+
+- Start command:
+
+```bash
+python -m uvicorn app.main:app --host 0.0.0.0 --port $PORT
+```
+
+5. Add environment variables:
+
+```env
+APP_ENV=production
+DEBUG=false
+SEED_DB=true
+CORS_ORIGINS=https://your-github-pages-domain.example.com,http://localhost:5173
+```
+
+### Frontend deployment
+
+The frontend can be deployed on GitHub Pages, Vercel, Netlify, or another static host. Set the API URL in the build environment:
+
+```env
+VITE_API_BASE_URL=https://your-render-backend-url.onrender.com
+```
+
+Then build:
+
+```bash
+cd resqnet/frontend
+npm install
+npm run build
+```
+
+### Render config file
+
+A ready-to-use Render config has been added at:
+
+```text
+render.yaml
+```
 
 ### Docker Compose
 
-From the project root:
+This project also supports local containerized development:
 
 ```bash
 docker compose up --build
 ```
-
-This starts:
-
-- backend on port 8000
-- frontend on port 5173
-
-### Production frontend build
-
-```bash
-cd resqnet/frontend
-npm run build
-```
-
-The output goes to the `dist` folder and can be served by a static host or reverse proxy.
-
-### Production backend notes
-
-The FastAPI API is designed to run behind a proxy or platform service and uses `CORS_ORIGINS` for deployment host configuration.
 
 ## Notes
 
